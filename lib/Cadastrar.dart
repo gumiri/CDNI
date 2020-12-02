@@ -97,116 +97,116 @@ class _Cadastrar extends State<Cadastrar> {
               children: [
                 Flexible(
                     child: TextField(
-                    controller: _folhaController,
-        decoration: InputDecoration(
-          hintText: 'Digite o número da folha',
-          labelText: 'Folha de Campo N°',
-        ),
-        onChanged: (text) {
-          setState(() {
-            _editedNotificacao.folha = int.parse(text);
-          });
-        })),
+                        controller: _folhaController,
+                        decoration: InputDecoration(
+                          hintText: 'Digite o número da folha',
+                          labelText: 'Folha de Campo N°',
+                        ),
+                        onChanged: (text) {
+                          setState(() {
+                            _editedNotificacao.folha = int.parse(text);
+                          });
+                        })),
               ],
             ),
             Row(
               children: [
                 Flexible(
                     child: TextField(
-                    controller: _dataController,
-        decoration: InputDecoration(
-          hintText: 'Digite a data',
-          labelText: 'Data',
-        ),
-        onChanged: (text) {
-          setState(() {
-            _editedNotificacao.data = int.parse(text);
-          });
-        })),
+                        controller: _dataController,
+                        decoration: InputDecoration(
+                          hintText: 'Digite a data',
+                          labelText: 'Data',
+                        ),
+                        onChanged: (text) {
+                          setState(() {
+                            _editedNotificacao.data = int.parse(text);
+                          });
+                        })),
                 Flexible(
                     child: TextField(
-                    controller: _horarioController,
-        decoration: InputDecoration(
-          hintText: 'Digite o horário',
-          labelText: 'Horário',
-        ),
-        onChanged: (text) {
-          setState(() {
-            _editedNotificacao.horario = int.parse(text);
-          });
-        })),
+                        controller: _horarioController,
+                        decoration: InputDecoration(
+                          hintText: 'Digite o horário',
+                          labelText: 'Horário',
+                        ),
+                        onChanged: (text) {
+                          setState(() {
+                            _editedNotificacao.horario = int.parse(text);
+                          });
+                        })),
               ],
             ),
             Row(
               children: [
                 Flexible(
                     child: TextField(
-                    controller: _enderecoController,
-        decoration: InputDecoration(
-          hintText: 'Digite o endereço',
-          labelText: 'Endereço',
-        ),
-        onChanged: (text) {
-          setState(() {
-            _editedNotificacao.endereco = text;
-          });
-        })),
+                        controller: _enderecoController,
+                        decoration: InputDecoration(
+                          hintText: 'Digite o endereço',
+                          labelText: 'Endereço',
+                        ),
+                        onChanged: (text) {
+                          setState(() {
+                            _editedNotificacao.endereco = text;
+                          });
+                        })),
                 Flexible(
                     child: TextField(
-                    controller: _numeroController,
-        decoration: InputDecoration(
-          hintText: 'Digite o número',
-          labelText: 'N°',
-        ),
-        onChanged: (text) {
-          setState(() {
-            _editedNotificacao.numero = int.parse(text);
-          });
-        })),
+                        controller: _numeroController,
+                        decoration: InputDecoration(
+                          hintText: 'Digite o número',
+                          labelText: 'N°',
+                        ),
+                        onChanged: (text) {
+                          setState(() {
+                            _editedNotificacao.numero = int.parse(text);
+                          });
+                        })),
               ],
             ),
             Row(
               children: [
                 Flexible(
                     child: TextField(
-                    controller: _complementoController,
-        decoration: InputDecoration(
-          hintText: 'Digite o complemento',
-          labelText: 'Complemento',
-        ),
-        onChanged: (text) {
-          setState(() {
-            _editedNotificacao.complemento = text;
-          });
-        })),
+                        controller: _complementoController,
+                        decoration: InputDecoration(
+                          hintText: 'Digite o complemento',
+                          labelText: 'Complemento',
+                        ),
+                        onChanged: (text) {
+                          setState(() {
+                            _editedNotificacao.complemento = text;
+                          });
+                        })),
                 Flexible(
                     child: TextField(
-                    controller: _bairroController,
-        decoration: InputDecoration(
-          hintText: 'Digite o bairro',
-          labelText: 'Bairro',
-        ),
-        onChanged: (text) {
-          setState(() {
-            _editedNotificacao.bairro = text;
-          });
-        })),
+                        controller: _bairroController,
+                        decoration: InputDecoration(
+                          hintText: 'Digite o bairro',
+                          labelText: 'Bairro',
+                        ),
+                        onChanged: (text) {
+                          setState(() {
+                            _editedNotificacao.bairro = text;
+                          });
+                        })),
               ],
             ),
             Row(
               children: [
                 Flexible(
                     child: TextField(
-                    controller: _municipioController,
-        decoration: InputDecoration(
-          hintText: 'Digite o município',
-          labelText: 'Município',
-        ),
-        onChanged: (text) {
-          setState(() {
-            _editedNotificacao.municipio = text;
-          });
-        })),
+                        controller: _municipioController,
+                        decoration: InputDecoration(
+                          hintText: 'Digite o município',
+                          labelText: 'Município',
+                        ),
+                        onChanged: (text) {
+                          setState(() {
+                            _editedNotificacao.municipio = text;
+                          });
+                        })),
               ],
             ),
             Container(
@@ -223,62 +223,64 @@ class _Cadastrar extends State<Cadastrar> {
               children: [
                 Flexible(
                     child: TextField(
-                    controller: _fiscalController,
-        decoration: InputDecoration(
-          hintText: 'Digite o fiscal',
-          labelText: 'Fiscal°',
-        ),
-        onChanged: (text) {
-          setState(() {
-            _editedNotificacao.fiscal = text;
-          });
-        })),
+                        controller: _fiscalController,
+                        decoration: InputDecoration(
+                          hintText: 'Digite o fiscal',
+                          labelText: 'Fiscal°',
+                        ),
+                        onChanged: (text) {
+                          setState(() {
+                            _editedNotificacao.fiscal = text;
+                          });
+                        })),
                 Flexible(
                     child: TextField(
-                    controller: _clienteController,
-        decoration: InputDecoration(
-          hintText: 'Digite o nome do cliente',
-          labelText: 'Cliente',
-        ),
-        onChanged: (text) {
-          setState(() {
-            _editedNotificacao.cliente = text;
-          });
-        })),
+                        controller: _clienteController,
+                        decoration: InputDecoration(
+                          hintText: 'Digite o nome do cliente',
+                          labelText: 'Cliente',
+                        ),
+                        onChanged: (text) {
+                          setState(() {
+                            _editedNotificacao.cliente = text;
+                          });
+                        })),
               ],
             ),
             Row(
               children: [
                 Flexible(
                     child: TextField(
-                    controller: _matriculaController,
-        decoration: InputDecoration(
-          hintText: 'Digite a matrícula',
-          labelText: 'Matrícula',
-        ),
-        onChanged: (text) {
-          setState(() {
-            _editedNotificacao.matricula = text;
-          });
-        })),
+                        controller: _matriculaController,
+                        decoration: InputDecoration(
+                          hintText: 'Digite a matrícula',
+                          labelText: 'Matrícula',
+                        ),
+                        onChanged: (text) {
+                          setState(() {
+                            _editedNotificacao.matricula = text;
+                          });
+                        })),
                 Flexible(
                     child: TextField(
-                    controller: _rgController,
-        decoration: InputDecoration(
-          hintText: 'Digite o rg',
-          labelText: 'RG',
-        ),
-        onChanged: (text) {
-          setState(() {
-            _editedNotificacao.rg = text;
-          });
-        })),
+                        controller: _rgController,
+                        decoration: InputDecoration(
+                          hintText: 'Digite o rg',
+                          labelText: 'RG',
+                        ),
+                        onChanged: (text) {
+                          setState(() {
+                            _editedNotificacao.rg = text;
+                          });
+                        })),
               ],
             ),
             RaisedButton(
                 onPressed: () {
                   putValues();
-                  DatabaseProvider.db.insert(_editedNotificacao).then((value) => print("inserido"));
+                  DatabaseProvider.db
+                      .insert(_editedNotificacao)
+                      .then((value) => print("inserido"));
 
                   Navigator.pop(context);
                 },
