@@ -1,6 +1,7 @@
 import 'dart:ffi';
 import 'Notificacao.dart';
 import 'package:flutter/material.dart';
+import 'DatabaseProvider.dart';
 
 class Cadastrar extends StatefulWidget {
   final Notificacao notificacao;
@@ -12,7 +13,6 @@ class Cadastrar extends StatefulWidget {
 
 class _Cadastrar extends State<Cadastrar> {
   Notificacao _editedNotificacao;
-  NotificacaoHelper helper;
 
   final _folhaController = TextEditingController();
   final _dataController = TextEditingController();
@@ -67,7 +67,7 @@ class _Cadastrar extends State<Cadastrar> {
     _editedNotificacao.folha = int.parse(_folhaController.text);
     _editedNotificacao.data = int.parse(_dataController.text);
     _editedNotificacao.horario = int.parse(_horarioController.text);
-    _editedNotificacao.endereco = _enderecoController.text;
+    _editedNotificacao.endereco = _enderecoController.text.toString();
     _editedNotificacao.numero = int.parse(_numeroController.text);
     _editedNotificacao.complemento = _complementoController.text;
     _editedNotificacao.bairro = _bairroController.text;
@@ -277,7 +277,10 @@ class _Cadastrar extends State<Cadastrar> {
             ),
             RaisedButton(
                 onPressed: () {
-                  Navigator.pop(context, putValues());
+                  putValues();
+                  DatabaseProvider.db.insert(_editedNotificacao).then((value) => print("inserido"));
+
+                  Navigator.pop(context);
                 },
                 child: Text('Salvar')),
           ]),

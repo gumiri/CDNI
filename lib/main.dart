@@ -1,6 +1,6 @@
 import 'dart:ffi';
-import 'Visualisar.dart';
 import 'Cadastrar.dart';
+import 'Visualizar.dart';
 
 import 'package:flutter/material.dart';
 
@@ -37,7 +37,7 @@ class mainPage extends StatelessWidget {
                 onPressed: () {
                   Navigator.push(
                     context,
-                    MaterialPageRoute(builder: (context) => Visualisar()),
+                    MaterialPageRoute(builder: (context) => Visualizar()),
                   );
                 },
               ),
