@@ -25,6 +25,9 @@ class Usuario {
       DatabaseProvider.COLUMN_RG_USUARIO: rg,
       DatabaseProvider.COLUMN_ENDERECO_USUARIO: endereco
     };
+    if (id != null) {
+      map[DatabaseProvider.COLUMN_ID] = id;
+    }
     return map;
   }
 }

@@ -2,6 +2,7 @@ import 'dart:ffi';
 import 'Cadastrar.dart';
 import 'Visualizar.dart';
 import 'CadastrarUsuario.dart';
+import 'VisualizarUsuario.dart';
 
 import 'package:flutter/material.dart';
 
@@ -48,6 +49,15 @@ class mainPage extends StatelessWidget {
                   Navigator.push(
                     context,
                     MaterialPageRoute(builder: (context) => CadastrarUsuario()),
+                  );
+                },
+              ),
+              ElevatedButton(
+                child: Text('Lista de Usuário'),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(builder: (context) => VisualizarUsuario()),
                   );
                 },
               ),

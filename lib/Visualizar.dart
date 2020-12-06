@@ -38,7 +38,9 @@ class _Visualizar extends State<Visualizar> {
               subtitle: Text(
                   'Bairro: ${dbList[index].bairro}\n Cliente: ${dbList[index].cliente}'),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(notificacao: dbList[index])));
+                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(notificacao: dbList[index]))).then((value) => DatabaseProvider.db.getData().then((value) => setState(() {
+          dbList = value;
+        })));
               },
             );
           }),

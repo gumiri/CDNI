@@ -1,4 +1,6 @@
 import 'dart:ffi';
+import 'package:CDNI/main.dart';
+
 import 'Notificacao.dart';
 import 'package:flutter/material.dart';
 import 'DatabaseProvider.dart';
@@ -6,7 +8,7 @@ import 'DatabaseProvider.dart';
 class Cadastrar extends StatefulWidget {
   final Notificacao notificacao;
 
-  Cadastrar({this.notificacao});
+  Cadastrar({Key key, @required this.notificacao}) : super(key: key);
   @override
   _Cadastrar createState() => _Cadastrar();
 }
@@ -32,6 +34,7 @@ class _Cadastrar extends State<Cadastrar> {
     'Construir caixa de retenção de óleo e area'
   ]);
   String problemas;
+  bool _editing;
 
   @override
   void initState() {
@@ -39,7 +42,9 @@ class _Cadastrar extends State<Cadastrar> {
 
     if (widget.notificacao == null) {
       _editedNotificacao = Notificacao();
+      _editing = false;
     } else {
+      _editing = true;
       _editedNotificacao = Notificacao.fromMap(widget.notificacao.toMap());
 
       _folhaController.text = _editedNotificacao.folha.toString();
@@ -274,11 +279,14 @@ class _Cadastrar extends State<Cadastrar> {
             RaisedButton(
                 onPressed: () {
                   putValues();
-                  DatabaseProvider.db
-                      .insert(_editedNotificacao)
-                      .then((value) => print("inserido"));
+                  if (!_editing) {
+                    DatabaseProvider.db.insert(_editedNotificacao);
+                  } else {
+                    DatabaseProvider.db
+                        .updateNotific(_editedNotificacao);
+                  }
 
-                  Navigator.pop(context);
+                  Navigator.popUntil(context, ModalRoute.withName(Navigator.defaultRouteName));
                 },
                 child: Text('Salvar')),
           ]),

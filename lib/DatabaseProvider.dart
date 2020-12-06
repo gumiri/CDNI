@@ -21,6 +21,7 @@ class DatabaseProvider {
   static const String COLUMN_MATRICULA = "matricula";
   static const String COLUMN_RG = "rg";
   static const String TABLE_USUARIO = "usuario";
+  static const String COLUMN_IDUSUARIO = "idUsuario";
   static const String COLUMN_MATRICULA_USUARIO = "matriculaUsuario";
   static const String COLUMN_NOME_USUARIO = "nomeUsuario";
   static const String COLUMN_RG_USUARIO = "rgUsuario";
@@ -35,8 +36,10 @@ class DatabaseProvider {
     print("database getter called");
 
     if (_database != null) {
+      print("Database já criado");
       return _database;
     }
+    print("Criado o database");
     _database = await createDatabase();
 
     return _database;
@@ -54,10 +57,10 @@ class DatabaseProvider {
 
         await database.execute("CREATE TABLE $TABLE_USUARIO ("
             "$COLUMN_ID INTEGER PRIMARY KEY,"
-            "$COLUMN_MATRICULA_USUARIO TEXTO"
-            "$COLUMN_NOME_USUARIO TEXTO"
-            "$COLUMN_RG_USUARIO TEXT"
-            "$COLUMN_ENDERECO_USUARIO TEXTO"
+            "$COLUMN_MATRICULA_USUARIO TEXT,"
+            "$COLUMN_NOME_USUARIO TEXT,"
+            "$COLUMN_RG_USUARIO TEXT,"
+            "$COLUMN_ENDERECO_USUARIO TEXT"
             ")");
         await database.execute("CREATE TABLE $TABLE_NAME ("
             "$COLUMN_ID INTEGER PRIMARY KEY,"
@@ -122,16 +125,14 @@ class DatabaseProvider {
         COLUMN_ID,
         COLUMN_MATRICULA_USUARIO,
         COLUMN_NOME_USUARIO,
-        COLUMN_RG,
+        COLUMN_RG_USUARIO,
         COLUMN_ENDERECO_USUARIO
       ],
     );
     List<Usuario> usuarioList = List<Usuario>();
 
     usuarios.forEach((currentUsuario) {
-      print(currentUsuario);
       Usuario usuario = Usuario.fromMap(currentUsuario);
-
       usuarioList.add(usuario);
     });
 
@@ -148,5 +149,27 @@ class DatabaseProvider {
     final db = await database;
     usuario.id = await db.insert(TABLE_USUARIO, usuario.toMap());
     return usuario;
+  }
+
+  Future<int> deleteNotific(int id) async {
+    final db = await database;
+    
+    return await db.delete(TABLE_NAME, where: "id = ?", whereArgs: [id]);
+  }
+  Future<int> deleteUser(int id) async {
+    final db = await database;
+
+    return await db.delete(TABLE_USUARIO, where: "id = ?", whereArgs: [id]);
+  }
+
+  Future<int> updateNotific(Notificacao notificacao) async {
+    final db = await database;
+    return await db.update(TABLE_NAME, notificacao.toMap(),
+        where: "id = ?", whereArgs: [notificacao.id]);
+  }
+  Future<int> updateUser(Usuario usuario) async {
+    final db = await database;
+    return await db.update(TABLE_USUARIO, usuario.toMap(),
+        where: "id = ?", whereArgs: [usuario.id]);
   }
 }
