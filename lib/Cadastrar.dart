@@ -32,11 +32,6 @@ class _Cadastrar extends State<Cadastrar> {
     'Construir caixa de retenção de óleo e area'
   ]);
   String problemas;
-  @override
-  void setState(fn) {
-    // TODO: implement setState
-    problemas = problemaWidget.getValue();
-  }
 
   @override
   void initState() {
@@ -72,6 +67,7 @@ class _Cadastrar extends State<Cadastrar> {
     _editedNotificacao.complemento = _complementoController.text;
     _editedNotificacao.bairro = _bairroController.text;
     _editedNotificacao.municipio = _municipioController.text;
+    problemas = problemaWidget.getValue();
     _editedNotificacao.problema = problemas;
     _editedNotificacao.fiscal = _fiscalController.text;
     _editedNotificacao.cliente = _clienteController.text;
