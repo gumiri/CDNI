@@ -10,13 +10,24 @@ class VisualizarUsuario extends StatefulWidget {
 
 class _VisualizarUsuario extends State<VisualizarUsuario> {
   List<Usuario> dbList = List();
+  List<Usuario> filterList = List();
+  bool isSearching = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     DatabaseProvider.db.getUsersData().then((value) => setState(() {
-          dbList = value;
+          dbList = filterList = value;
         }));
+  }
+
+  void _filter(value) {
+    setState(() {
+      filterList = dbList
+          .where((element) =>
+              element.nome.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
   }
 
   @override
@@ -24,23 +35,54 @@ class _VisualizarUsuario extends State<VisualizarUsuario> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Lista de Agentes"),
+        title: !isSearching
+            ? Text("Lista de Agentes")
+            : TextField(
+                onChanged: (value) {
+                  _filter(value);
+                },
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(hintText: "Pesquisar")),
+        actions: [
+          !isSearching
+              ? IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    setState(() {
+                      this.isSearching = !this.isSearching;
+                    });
+                  })
+              : IconButton(
+                  icon: Icon(Icons.cancel),
+                  onPressed: () {
+                    setState(() {
+                      this.isSearching = !this.isSearching;
+                      filterList = dbList;
+                    });
+                  })
+        ],
       ),
       body: ListView.builder(
           padding: const EdgeInsets.all(8),
-          itemCount: dbList.length,
+          itemCount: filterList.length,
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
               title: Text(
-                'Nome: ${dbList[index].nome}',
+                'Nome: ${filterList[index].nome}',
                 style: TextStyle(fontSize: 20),
               ),
-              subtitle: Text(
-                  'Matrícula: ${dbList[index].matricula}'),
+              subtitle: Text('Matrícula: ${filterList[index].matricula}'),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => AgenteDetail(usuario: dbList[index]))).then((value) => DatabaseProvider.db.getUsersData().then((value) => setState(() {
-          dbList = value;
-        })));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) =>
+                            AgenteDetail(usuario: dbList[index]))).then(
+                    (value) => DatabaseProvider.db
+                        .getUsersData()
+                        .then((value) => setState(() {
+                              dbList = value;
+                            })));
               },
             );
           }),

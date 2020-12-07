@@ -10,13 +10,24 @@ class Visualizar extends StatefulWidget {
 
 class _Visualizar extends State<Visualizar> {
   List<Notificacao> dbList = List();
+  List<Notificacao> filterList = List();
+  bool isSearching = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     DatabaseProvider.db.getData().then((value) => setState(() {
-          dbList = value;
+          dbList = filterList = value;
         }));
+  }
+
+  void _filter(value) {
+    setState(() {
+      filterList = dbList
+          .where((element) =>
+              element.endereco.toLowerCase().contains(value.toLowerCase()))
+          .toList();
+    });
   }
 
   @override
@@ -24,23 +35,53 @@ class _Visualizar extends State<Visualizar> {
     // TODO: implement build
     return Scaffold(
       appBar: AppBar(
-        title: Text("Cadastrar Notificação"),
+        title: !isSearching
+            ? Text("Visualizar Notificação")
+            : TextField(
+                onChanged: (value) {
+                  _filter(value);
+                },
+                style: TextStyle(color: Colors.white),
+                decoration: InputDecoration(hintText: "Pesquisar")),
+        actions: <Widget>[
+          !isSearching
+              ? IconButton(
+                  icon: Icon(Icons.search),
+                  onPressed: () {
+                    setState(() {
+                      this.isSearching = !this.isSearching;
+                    });
+                  })
+              : IconButton(
+                  icon: Icon(Icons.cancel),
+                  onPressed: () {
+                    setState(() {
+                      this.isSearching = !this.isSearching;
+                      filterList = dbList;
+                    });
+                  })
+        ],
       ),
       body: ListView.builder(
           padding: const EdgeInsets.all(8),
-          itemCount: dbList.length,
+          itemCount: filterList.length,
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
               title: Text(
-                'Endereço: ${dbList[index].endereco}',
+                'Endereço: ${filterList[index].endereco}',
                 style: TextStyle(fontSize: 20),
               ),
               subtitle: Text(
-                  'Bairro: ${dbList[index].bairro}\n Cliente: ${dbList[index].cliente}'),
+                  'Bairro: ${filterList[index].bairro}\nCliente: ${dbList[index].cliente}'),
               onTap: () {
-                Navigator.push(context, MaterialPageRoute(builder: (context) => DetailScreen(notificacao: dbList[index]))).then((value) => DatabaseProvider.db.getData().then((value) => setState(() {
-          dbList = value;
-        })));
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => DetailScreen(
+                            notificacao: dbList[index]))).then((value) =>
+                    DatabaseProvider.db.getData().then((value) => setState(() {
+                          dbList = value;
+                        })));
               },
             );
           }),
