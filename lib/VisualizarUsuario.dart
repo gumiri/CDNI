@@ -1,22 +1,22 @@
-import 'package:CDNI/Detail.dart';
-import 'package:CDNI/Notificacao.dart';
+import 'package:CDNI/Usuario.dart';
 import 'package:flutter/material.dart';
 import 'DatabaseProvider.dart';
+import 'AgenteDetail.dart';
 
-class Visualizar extends StatefulWidget {
+class VisualizarUsuario extends StatefulWidget {
   @override
-  _Visualizar createState() => _Visualizar();
+  _VisualizarUsuario createState() => _VisualizarUsuario();
 }
 
-class _Visualizar extends State<Visualizar> {
-  List<Notificacao> dbList = List();
-  List<Notificacao> filterList = List();
+class _VisualizarUsuario extends State<VisualizarUsuario> {
+  List<Usuario> dbList = List();
+  List<Usuario> filterList = List();
   bool isSearching = false;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    DatabaseProvider.db.getData().then((value) => setState(() {
+    DatabaseProvider.db.getUsersData().then((value) => setState(() {
           dbList = filterList = value;
         }));
   }
@@ -25,7 +25,7 @@ class _Visualizar extends State<Visualizar> {
     setState(() {
       filterList = dbList
           .where((element) =>
-              element.endereco.toLowerCase().contains(value.toLowerCase()))
+              element.nome.toLowerCase().contains(value.toLowerCase()))
           .toList();
     });
   }
@@ -36,14 +36,14 @@ class _Visualizar extends State<Visualizar> {
     return Scaffold(
       appBar: AppBar(
         title: !isSearching
-            ? Text("Visualizar Notificação")
+            ? Text("Lista de Agentes")
             : TextField(
                 onChanged: (value) {
                   _filter(value);
                 },
                 style: TextStyle(color: Colors.white),
                 decoration: InputDecoration(hintText: "Pesquisar")),
-        actions: <Widget>[
+        actions: [
           !isSearching
               ? IconButton(
                   icon: Icon(Icons.search),
@@ -68,20 +68,21 @@ class _Visualizar extends State<Visualizar> {
           itemBuilder: (BuildContext context, int index) {
             return ListTile(
               title: Text(
-                'Endereço: ${filterList[index].endereco}',
+                'Nome: ${filterList[index].nome}',
                 style: TextStyle(fontSize: 20),
               ),
-              subtitle: Text(
-                  'Bairro: ${filterList[index].bairro}\nCliente: ${dbList[index].cliente}'),
+              subtitle: Text('Matrícula: ${filterList[index].matricula}'),
               onTap: () {
                 Navigator.push(
                     context,
                     MaterialPageRoute(
-                        builder: (context) => DetailScreen(
-                            notificacao: filterList[index]))).then((value) =>
-                    DatabaseProvider.db.getData().then((value) => setState(() {
-                          filterList = dbList = value;
-                        })));
+                        builder: (context) =>
+                            AgenteDetail(usuario: filterList[index]))).then(
+                    (value) => DatabaseProvider.db
+                        .getUsersData()
+                        .then((value) => setState(() {
+                              filterList = dbList = value;
+                            })));
               },
             );
           }),

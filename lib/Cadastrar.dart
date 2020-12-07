@@ -1,4 +1,6 @@
 import 'dart:ffi';
+import 'package:CDNI/main.dart';
+
 import 'Notificacao.dart';
 import 'package:flutter/material.dart';
 import 'DatabaseProvider.dart';
@@ -6,7 +8,7 @@ import 'DatabaseProvider.dart';
 class Cadastrar extends StatefulWidget {
   final Notificacao notificacao;
 
-  Cadastrar({this.notificacao});
+  Cadastrar({Key key, @required this.notificacao}) : super(key: key);
   @override
   _Cadastrar createState() => _Cadastrar();
 }
@@ -32,11 +34,7 @@ class _Cadastrar extends State<Cadastrar> {
     'Construir caixa de retenção de óleo e area'
   ]);
   String problemas;
-  @override
-  void setState(fn) {
-    // TODO: implement setState
-    problemas = problemaWidget.getValue();
-  }
+  bool _editing;
 
   @override
   void initState() {
@@ -44,7 +42,9 @@ class _Cadastrar extends State<Cadastrar> {
 
     if (widget.notificacao == null) {
       _editedNotificacao = Notificacao();
+      _editing = false;
     } else {
+      _editing = true;
       _editedNotificacao = Notificacao.fromMap(widget.notificacao.toMap());
 
       _folhaController.text = _editedNotificacao.folha.toString();
@@ -72,6 +72,7 @@ class _Cadastrar extends State<Cadastrar> {
     _editedNotificacao.complemento = _complementoController.text;
     _editedNotificacao.bairro = _bairroController.text;
     _editedNotificacao.municipio = _municipioController.text;
+    problemas = problemaWidget.getValue();
     _editedNotificacao.problema = problemas;
     _editedNotificacao.fiscal = _fiscalController.text;
     _editedNotificacao.cliente = _clienteController.text;
@@ -278,11 +279,12 @@ class _Cadastrar extends State<Cadastrar> {
             RaisedButton(
                 onPressed: () {
                   putValues();
-                  DatabaseProvider.db
-                      .insert(_editedNotificacao)
-                      .then((value) => print("inserido"));
-
-                  Navigator.pop(context);
+                  if (!_editing) {
+                    DatabaseProvider.db.insert(_editedNotificacao);
+                  } else {
+                    DatabaseProvider.db.updateNotific(_editedNotificacao);
+                  }
+                  Navigator.of(context).popUntil((route) => route.isFirst);
                 },
                 child: Text('Salvar')),
           ]),
