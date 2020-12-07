@@ -122,7 +122,7 @@ class _CadastrarUsuario extends State<CadastrarUsuario> {
                         .updateUser(_usuario).then((value) => print("Editing"));
                   }
 
-                  Navigator.popUntil(context, ModalRoute.withName(Navigator.defaultRouteName));
+                  Navigator.of(context).popUntil((route) => route.isFirst);
                 })
           ]),
         ),

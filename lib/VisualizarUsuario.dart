@@ -77,11 +77,11 @@ class _VisualizarUsuario extends State<VisualizarUsuario> {
                     context,
                     MaterialPageRoute(
                         builder: (context) =>
-                            AgenteDetail(usuario: dbList[index]))).then(
+                            AgenteDetail(usuario: filterList[index]))).then(
                     (value) => DatabaseProvider.db
                         .getUsersData()
                         .then((value) => setState(() {
-                              dbList = value;
+                              filterList = dbList = value;
                             })));
               },
             );

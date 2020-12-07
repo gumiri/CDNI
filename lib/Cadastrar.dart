@@ -282,11 +282,9 @@ class _Cadastrar extends State<Cadastrar> {
                   if (!_editing) {
                     DatabaseProvider.db.insert(_editedNotificacao);
                   } else {
-                    DatabaseProvider.db
-                        .updateNotific(_editedNotificacao);
+                    DatabaseProvider.db.updateNotific(_editedNotificacao);
                   }
-
-                  Navigator.popUntil(context, ModalRoute.withName(Navigator.defaultRouteName));
+                  Navigator.of(context).popUntil((route) => route.isFirst);
                 },
                 child: Text('Salvar')),
           ]),

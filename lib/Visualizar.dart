@@ -78,9 +78,9 @@ class _Visualizar extends State<Visualizar> {
                     context,
                     MaterialPageRoute(
                         builder: (context) => DetailScreen(
-                            notificacao: dbList[index]))).then((value) =>
+                            notificacao: filterList[index]))).then((value) =>
                     DatabaseProvider.db.getData().then((value) => setState(() {
-                          dbList = value;
+                          filterList = dbList = value;
                         })));
               },
             );
